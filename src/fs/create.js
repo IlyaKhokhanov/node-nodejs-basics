@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
+import { dirname, join } from 'node:path';
 import { stat, writeFile } from 'fs/promises';
 
 const path = fileURLToPath(import.meta.url);
-const pathFile = dirname(path) + '/files/fresh.txt';
+const pathFile = join(dirname(path), 'files', 'fresh.txt');
 
 const create = async () => {
     const checkFile = await stat(pathFile)
