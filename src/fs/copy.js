@@ -1,5 +1,5 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { stat, mkdir, readdir, copyFile } from 'fs/promises';
 
 const _filename = fileURLToPath(import.meta.url);
@@ -12,11 +12,11 @@ const copy = async () => {
     const checkPath = await stat(path)
         .then((res) => res.isDirectory())
         .catch((err) => err.code === 'ENOENT' ? false : err);
-    if (checkPath === true) {
+    if (checkPath) {
         const checkCopyPath = await stat(copyPath)
             .then((res) => res.isDirectory())
             .catch((err) => err.code === 'ENOENT' ? false : err);
-        if (checkCopyPath === false) {
+        if (!checkCopyPath) {
             await mkdir(copyPath);
             const files = await readdir(path);
             for (const file of files) {
@@ -25,12 +25,12 @@ const copy = async () => {
                 await copyFile(source, destination);
             }
             return console.log('All files are copied!');
-        } else if (checkCopyPath === true) {
+        } else if (checkCopyPath) {
             throw new Error('FS operation failed');
         } else {
             throw new Error(checkCopyPath);
         }
-    } else if (checkPath === false) {
+    } else if (!checkPath) {
         throw new Error('FS operation failed');
     } else {
         throw new Error(checkPath);

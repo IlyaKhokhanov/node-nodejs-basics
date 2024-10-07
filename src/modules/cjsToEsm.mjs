@@ -4,8 +4,8 @@ import { createServer as createServerHttp } from ('http');
 import './files/c';
 import jsonA from './files/a.json';
 import jsonB from './files/b.json';
-import { fileURLToPath } from 'node:url';
-import { dirname } from 'node:path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

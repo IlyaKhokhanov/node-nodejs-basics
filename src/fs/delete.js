@@ -1,5 +1,5 @@
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 import { stat, rm } from 'fs/promises';
 
 const _filename = fileURLToPath(import.meta.url);
@@ -11,14 +11,14 @@ const remove = async () => {
     const checkFolder = await stat(path)
         .then((res) => res.isDirectory())
         .catch((err) => err.code === 'ENOENT' ? false : err);
-    if (checkFolder === true) {
+    if (checkFolder) {
         const checkFile = await stat(deleteFilePath)
             .then((res) => res.isFile())
             .catch((err) => err.code === 'ENOENT' ? false : err)
-        if (checkFile === true) return await rm(deleteFilePath, {force: true}) || console.log('File removed!');
-        throw checkFile === false ? new Error('FS operation failed') : new Error(checkFile);
+        if (checkFile) return await rm(deleteFilePath, {force: true}) || console.log('File removed!');
+        throw !checkFile ? new Error('FS operation failed') : new Error(checkFile);
     } else {
-        throw checkFolder === false ? new Error('Incorrect path!') : new Error(checkFolder);
+        throw !checkFolder ? new Error('Incorrect path!') : new Error(checkFolder);
     }
 };
 
