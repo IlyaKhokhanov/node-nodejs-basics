@@ -1,7 +1,7 @@
-import {join, dirname} from 'path';
-import {fileURLToPath} from 'url';
-import {createReadStream} from 'fs';
-import {stdout} from 'process';
+import { join, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import { createReadStream } from 'fs';
+import { stdout } from 'process';
 
 const __fileName = fileURLToPath(import.meta.url);
 const __dirname = dirname(__fileName);
